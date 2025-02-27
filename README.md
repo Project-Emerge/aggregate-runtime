@@ -14,4 +14,31 @@ In the following section are some images collected during the Researchers' Night
   <img src="https://github.com/user-attachments/assets/991528f2-33d1-4599-a113-3a0090e179a3" width="49%" alt="step-1-recover">
 </div>
 <img src="https://github.com/user-attachments/assets/fd9ef5ad-2ec7-4d16-a367-72c044d2ce1f" width="100%" alt="step-3">
- 
+
+
+## How to run the demonstrator
+
+This section explains how to run the demonstrator in simulation mode.
+
+### Requirements
+- sbt (Scala Build Tool) >= 1.10.1
+- Java >= 8
+
+### Launch the demonstrator
+The following commands simulate the scenarios demonstrated during the Researchers' Night:
+
+```bash
+# Simulate robots forming a line
+sbt "runMain it.unibo.mock.LineFormationDemo"
+
+# Simulate robots forming a circle
+sbt "runMain it.unibo.mock.CircleFormationDemo"
+```
+
+Each simulation will:
+1. Open a window showing robots moving in real-time
+2. Display the formation process towards the desired shape (line or circle)
+3. Simulate a network failure by disconnecting 4 robots
+4. Demonstrate the self-healing capability as remaining robots recover the formation
+
+### Screenshots
