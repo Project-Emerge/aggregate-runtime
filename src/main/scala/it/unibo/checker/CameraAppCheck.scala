@@ -15,7 +15,11 @@ import org.opencv.objdetect.Objdetect
 import java.util
 import java.util.{ArrayList, List}
 
-object App {
+/**
+ * This class is used to test the CameraPose class.
+ * It calculates the pose of the camera and then captures the positioning of the camera.
+ */
+object CameraAppCheck {
   @throws[FrameGrabber.Exception]
   @throws[InterruptedException]
   def main(args: Array[String]): Unit = {

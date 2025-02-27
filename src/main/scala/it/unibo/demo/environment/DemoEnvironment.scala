@@ -5,6 +5,11 @@ import it.unibo.core.Environment
 import it.unibo.demo.{ID, Info}
 import it.unibo.utils.Position.{Position, *, given}
 
+/**
+ * A simple snapshot of the environment created from a web service.
+ * @param data A map of node IDs to their positions and information.
+ * @param neighboursRadius The radius within which nodes are considered neighbors.
+ */
 class DemoEnvironment(data: Map[ID, (Position, Info)], neighboursRadius: Double)
     extends Environment[ID, Position, Info]:
 

@@ -1,12 +1,16 @@
 package it.unibo.demo.robot
 
 import it.unibo.core.{Environment, EnvironmentUpdate}
-import it.unibo.demo.robot.Actuation.{NoOp, Rotation, Forward}
+import it.unibo.demo.robot.Actuation.{Forward, NoOp, Rotation}
 import it.unibo.demo.{ID, Info, Position}
-import it.unibo.demo.robot.Robot
 
 import scala.concurrent.{ExecutionContext, Future}
 
+/**
+ * ADT representing the actuation of a robot.
+ * That are, Rotation (turn the robot in a specific direction),
+ * Forward (move the robot in a specific direction) and NoOp (do nothing).
+ */
 enum Actuation:
   case Rotation(rotationVector: (Double, Double))
   case Forward(vector: (Double, Double))
@@ -63,23 +67,3 @@ class RobotUpdate(robots: List[Robot], threshold: Double)(using ExecutionContext
       // convert from -pi, pi to 0 to 2pi
   def adjustAngle(angle: Double): Double =
     if angle < 0 then angle + 2 * Math.PI else angle
-
-//    Future:
-//      val direction = world.sensing(id)
-//      val directionVector = (Math.cos(direction), Math.sin(direction))
-//      val euclideanDistance = Math.sqrt(
-//        (actuation._1 - directionVector._1) * (actuation._1 - directionVector._1) +
-//          (actuation._2 - directionVector._2) * (actuation._2 - directionVector._2)
-//      )
-//      // get the angle between direction and actuation
-//      val angle = Math.atan2(actuation._2, actuation._1) - Math.atan2(directionVector._2, directionVector._1)
-//      val selected = robots.find(_.id == id)
-//      robots
-//        .find(_.id == id)
-//        .foreach: robot =>
-//          if actuation == (0.0, 0.0) then robot.nop()
-//          else if euclideanDistance < threshold then robot.backward()
-//          else if angle > 0 then robot.spinRight()
-//          else robot.spinLeft()
-//          end if
-//      ()

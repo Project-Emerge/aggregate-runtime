@@ -5,11 +5,15 @@ import it.unibo.demo.robot.Actuation.*
 
 import scala.concurrent.Future
 
+/**
+ * Update the environment of the simulation for the mock scenario.
+ * @param killStrategy the strategy to use to kill entities during the update
+ */
 class SimpleUpdate(killStrategy: KillStrategy = KillStrategy.never)
     extends EnvironmentUpdate[ID, Position, Actuation, Info, SimpleEnvironment]:
 
   override def update(world: SimpleEnvironment, id: ID, actuation: Actuation): Future[Unit] = Future.successful:
-    
+
     val position = world.positions(id)
     actuation match
       case NoOp => // world.positions = world.positions.updated(id, position)
@@ -23,5 +27,5 @@ class SimpleUpdate(killStrategy: KillStrategy = KillStrategy.never)
     val direction = Math.atan2(newPosition._2 - position._2, newPosition._1 - position._1)
     // rotate 180
     world.directions = world.directions.updated(id, direction + (Math.PI / 2))
-    if(!killStrategy.shouldSurvive(id)) world.positions = world.positions.removed(id)
+    if (!killStrategy.shouldSurvive(id)) world.positions = world.positions.removed(id)
     ()

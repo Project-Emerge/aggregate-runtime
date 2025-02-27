@@ -8,7 +8,7 @@ class FollowTheLeaderRotating(private val leaderId: Int, private val timeInterva
     Actuation.Rotation(normalize(0.5, 0.5)),
     Actuation.Rotation(normalize(0.5, -0.5)),
     Actuation.Rotation(normalize(-0.5, -0.5)),
-    Actuation.Rotation(normalize(-0.5, 0.5)),
+    Actuation.Rotation(normalize(-0.5, 0.5))
   )
 
   override def main(): Actuation =

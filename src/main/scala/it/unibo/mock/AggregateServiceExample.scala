@@ -13,7 +13,7 @@ import view.fx.{NeighborhoodPanel, NodeStyle, WorldPanel}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Random
 
-class BaseAggregateServiceExample(demoToLaunch: BaseDemo) extends JFXApp3 {
+class BaseAggregateServiceExample(demoToLaunch: BaseDemo) extends JFXApp3:
   private val agentsNeighborhoodRadius = 500
   private val nodeGuiSize = 10
   override def start(): Unit =
@@ -55,7 +55,7 @@ class BaseAggregateServiceExample(demoToLaunch: BaseDemo) extends JFXApp3 {
     (1 to howMany).map { i =>
       i -> (random.nextDouble() * maxPosition, random.nextDouble() * maxPosition)
     }.toMap
-}
+
 
 object LineFormationDemo extends BaseAggregateServiceExample(LineFormation(40, 5, 5))
 

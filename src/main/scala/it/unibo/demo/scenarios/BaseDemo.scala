@@ -2,6 +2,10 @@ package it.unibo.demo.scenarios
 
 import it.unibo.core.aggregate.AggregateIncarnation.{AggregateProgram, BlockG, BlockC, StandardSensors}
 
+/**
+ * Base class for all the demo programs.
+ * 
+ */
 trait BaseDemo extends AggregateProgram, StandardSensors, BlockG, BlockC:
   def distanceVector: (Double, Double) = nbrvar(NBR_VECTOR)
 

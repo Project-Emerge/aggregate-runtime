@@ -2,6 +2,11 @@ package it.unibo.core.aggregate
 
 import it.unibo.scafi.incarnations.Incarnation
 
+/**
+ * Building blocks for aggregate programs.
+ *  They are based on the `Incarnation` trait, which is a type family that defines the types used in the program.
+ *  
+ */
 trait BuildingBlocks:
   self: Incarnation =>
 
