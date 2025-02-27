@@ -42,3 +42,5 @@ Each simulation will:
 4. Demonstrate the self-healing capability as remaining robots recover the formation
 
 ### Screenshots
+![base](https://github.com/user-attachments/assets/1e31d297-b490-4774-842e-99c12d16c2c2) ![after](https://github.com/user-attachments/assets/5d735927-38ad-4a56-9794-167bdddf079d)
+
