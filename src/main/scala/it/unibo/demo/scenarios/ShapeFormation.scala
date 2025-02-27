@@ -21,7 +21,7 @@ abstract class ShapeFormation(leaderSelected: Int, stabilityThreshold: Double) e
     val res =
       if distanceTowardGoal < stabilityThreshold then Rotation(0, 1)
       else Forward((local._1 / distanceTowardGoal, local._2 / distanceTowardGoal))
-    println(s"Device ${mid()}: $res")
+    // println(s"Device ${mid()}: $res")
     res
 
   protected def orderedNodes(nodes: Set[(Int, (Double, Double))]): List[(Int, (Double, Double))] =

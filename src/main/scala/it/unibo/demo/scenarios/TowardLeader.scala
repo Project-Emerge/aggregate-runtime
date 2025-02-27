@@ -1,7 +1,7 @@
 package it.unibo.demo.scenarios
 
 import it.unibo.demo.robot.Actuation
-import it.unibo.demo.robot.Actuation.{Forward, NoOp, Rotation}
+import it.unibo.demo.robot.Actuation.{Forward, Rotation}
 
 class TowardLeader(leader: Int) extends BaseDemo:
   def rotate270(position: (Double, Double)): (Double, Double) =
@@ -15,5 +15,4 @@ class TowardLeader(leader: Int) extends BaseDemo:
         (0.0, 0.0),
         (x, y) => (x + distanceVector._1, y + distanceVector._2)
       )
-    print(distance)
-    mux(leader == mid())(Rotation(1, 0))(Forward((normalize(distance))))
+    mux(leader == mid())(Rotation(1, 0))(Forward(normalize(distance)))

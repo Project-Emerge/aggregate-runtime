@@ -3,7 +3,7 @@ package it.unibo.mock
 import it.unibo.core.UpdateLoop
 import it.unibo.core.aggregate.AggregateIncarnation.*
 import it.unibo.core.aggregate.AggregateOrchestrator
-import it.unibo.demo.scenarios.{CircleFormation, LineFormation, TowardLeader}
+import it.unibo.demo.scenarios.{BaseDemo, CircleFormation, LineFormation, TowardLeader}
 import it.unibo.utils.Position.given
 import scalafx.application.JFXApp3
 import scalafx.scene.layout.Pane
@@ -13,17 +13,20 @@ import view.fx.{NeighborhoodPanel, NodeStyle, WorldPanel}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Random
 
-object AggregateServiceExample extends JFXApp3 {
-  private val agentsNeighborhoodRadius = 1000
-  private val nodeGuiSize = 5
+class BaseAggregateServiceExample(demoToLaunch: BaseDemo) extends JFXApp3 {
+  private val agentsNeighborhoodRadius = 500
+  private val nodeGuiSize = 10
   override def start(): Unit =
 
-    val agents = randomAgents(20, 400)
+    val agents = randomAgents(10, 500)
     val world = SimpleEnvironment(agents, agentsNeighborhoodRadius)
     val provider = SimpleProvider(world)
-    val update = SimpleUpdate()
+    val update = SimpleUpdate(killStrategy = KillStrategy.killIdAfterNSteps(4000, Set(1, 2, 3, 4)))
     val aggregateOrchestrator =
-      AggregateOrchestrator[Position, Info, Actuation](agents.keySet, new TowardLeader(10))
+      AggregateOrchestrator[Position, Info, Actuation](
+        agents.keySet,
+        demoToLaunch
+      )
 
     val basePane = Pane()
     val guiPane = Pane()
@@ -53,3 +56,7 @@ object AggregateServiceExample extends JFXApp3 {
       i -> (random.nextDouble() * maxPosition, random.nextDouble() * maxPosition)
     }.toMap
 }
+
+object LineFormationDemo extends BaseAggregateServiceExample(LineFormation(40, 5, 5))
+
+object CircleFormationDemo extends BaseAggregateServiceExample(CircleFormation(40, 5, 5))

@@ -14,6 +14,7 @@ class SimpleRender(
 
   override def output(environment: Environment[ID, (Double, Double), Info]): Future[Unit] =
     Future:
+      worldPanel.clean()
       environment.nodes
         .map(id => id -> (environment.position(id) -> environment.sensing(id)))
         .map { case (id, (position, info)) => id -> (magnifier.magnify(position), info) }

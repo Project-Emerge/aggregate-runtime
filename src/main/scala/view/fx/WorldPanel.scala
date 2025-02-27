@@ -7,6 +7,9 @@ import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Rectangle, Line}
 
 class WorldPanel(pane: Pane, style: NodeStyle):
+  def clean(): Unit =
+    Platform.runLater:
+      pane.children.clear()
   def drawNodeAt(id: String, x: Double, y: Double, direction: Double): Unit =
     Platform.runLater:
       if !isAlreadyIn(id) then
