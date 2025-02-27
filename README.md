@@ -1,0 +1,17 @@
+# Aggregate Computing Tool Demonstrator
+
+This is a demonstrator used to coordinate a team of robots using aggregate computing (in particular [ScaFi](https://github.com/scafi/scafi)).
+
+This demonstrator contains:
+- The general abstractions needed to create the demonstrator, in the package: it/unibo/core
+- One instantiation of the pipeline for the Researchers' Night Demo, in it/unibo/demo
+- A demo using JavaFX to verify effective operation in simulation in advance.
+
+In the following section are some images collected during the Researchers' Night.
+
+<div style="display: flex; justify-content: space-between; width: 100%;">
+  <img src="https://github.com/user-attachments/assets/cee46e68-bff8-491a-bb00-1a9b423e7c1a" width="49%" alt="setup">
+  <img src="https://github.com/user-attachments/assets/991528f2-33d1-4599-a113-3a0090e179a3" width="49%" alt="step-1-recover">
+</div>
+<img src="https://github.com/user-attachments/assets/fd9ef5ad-2ec7-4d16-a367-72c044d2ce1f" width="100%" alt="step-3">
+ 
