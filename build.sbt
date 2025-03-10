@@ -1,5 +1,7 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
+val underlineJava = System.getProperty("java.version").split("\\.")(0)
+
 ThisBuild / scalaVersion := "3.4.3"
 val slf4jVersion = "2.0.16"
 lazy val root = (project in file("."))
@@ -22,6 +24,6 @@ lazy val root = (project in file("."))
         case _ => throw new Exception("Unknown platform!")
       }
       Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-        .map(m => "org.openjfx" % s"javafx-$m" % "16" classifier osName)
+        .map(m => "org.openjfx" % s"javafx-$m" % underlineJava) 
     }
   )
