@@ -17,6 +17,29 @@ In the following section are some images collected during the Researchers' Night
 
 ## Project structure
 
+The project is structured as follows:
+
+- `src`: Contains the source code of the project.
+    - `main`: Contains the main source code.
+        - `scala`: Contains the Scala code.
+            - `it/unibo`: Base package for the project's Scala code.
+                - `core`: Contains the general abstractions needed for the demonstrator.
+                - `demo`: Contains an instantiation of the pipeline for the Researchers' Night Demo.
+                - `mock`: Contains mock implementations for testing and simulation.
+                - `checker`: Contains code for checking properties of the system.
+                - `utils`: Contains utility classes.
+        - `java`: Contains the Java code.
+            - `it/unibo`: Base package for the project's Java code.
+                - `artificial_vision_tracking`: Contains code related to artificial vision tracking.
+                    - `aruco_markers`: Contains code for detecting Aruco markers.
+        - `resources`: Contains resources such as configuration files.
+            - `calibration`: Contains calibration files.
+- `python`: Contains Python scripts.
+    - `calibration.py`: Python script for camera calibration.
+    - `get-frames.py`: Python script to extract frames.
+    - `calibration_matrix.yaml`: YAML file containing calibration matrix.
+    - `frame-*.jpg`: Image frames used for calibration.
+
 ## How to run the demonstrator
 
 This section explains how to run the demonstrator in simulation mode.
