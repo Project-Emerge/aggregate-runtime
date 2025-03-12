@@ -15,6 +15,7 @@ In the following section are some images collected during the Researchers' Night
 </div>
 <img src="https://github.com/user-attachments/assets/fd9ef5ad-2ec7-4d16-a367-72c044d2ce1f" width="100%" alt="step-3">
 
+## Project structure
 
 ## How to run the demonstrator
 
