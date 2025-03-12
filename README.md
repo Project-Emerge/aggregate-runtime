@@ -15,30 +15,30 @@ In the following section are some images collected during the Researchers' Night
 </div>
 <img src="https://github.com/user-attachments/assets/fd9ef5ad-2ec7-4d16-a367-72c044d2ce1f" width="100%" alt="step-3">
 
-## Project structure
+## Project Structure
 
-The project is structured as follows:
+The project is organized as follows:
 
-- `src`: Contains the source code of the project.
-    - `main`: Contains the main source code.
-        - `scala`: Contains the Scala code.
-            - `it/unibo`: Base package for the project's Scala code.
-                - `core`: Contains the general abstractions needed for the demonstrator.
-                - `demo`: Contains an instantiation of the pipeline for the Researchers' Night Demo.
-                - `mock`: Contains mock implementations for testing and simulation.
-                - `checker`: Contains code for checking properties of the system.
-                - `utils`: Contains utility classes.
-        - `java`: Contains the Java code.
-            - `it/unibo`: Base package for the project's Java code.
-                - `artificial_vision_tracking`: Contains code related to artificial vision tracking.
-                    - `aruco_markers`: Contains code for detecting Aruco markers.
-        - `resources`: Contains resources such as configuration files.
-            - `calibration`: Contains calibration files.
-- `python`: Contains Python scripts.
-    - `calibration.py`: Python script for camera calibration.
-    - `get-frames.py`: Python script to extract frames.
-    - `calibration_matrix.yaml`: YAML file containing calibration matrix.
-    - `frame-*.jpg`: Image frames used for calibration.
+- `src`: Contains the source code for the demonstrator, including both OpenCV-based position estimation and the general framework.
+    - `main/scala`: Core implementation of the demonstrator
+        - `it/unibo`: Base package for all Scala code
+            - `core`: Contains foundational abstractions (`Environment`, `EnvironmentProvider`, `EnvironmentUpdate`, and `Orchestrator`) as discussed in the paper. Includes ScaFi-based Orchestrator implementation.
+            - `demo`: Implementation of the Researchers' Night demonstration pipeline. Contains `scenarios` with ScaFi implementations and MacroSwarm abstractions, particularly the `ShapeFormation` scenarios used in the demo.
+            - `mock`: Simulation components for testing, including the important `LineFormationDemo` and `CircleFormationDemo` used to simulate the Researchers' Night demo with robot failure scenarios.
+            - `checker`: Utilities for camera operation verification and calibration testing.
+        - `view.fx`: JavaFX visualization components used for simulation purposes.
+    - `main/java`: Java implementation of OpenCV-based components
+        - `it/unibo/artificial_vision_tracking`: OpenCV abstractions for position estimation, including:
+            - `CameraCalibrator.java`: Camera calibration using predefined calibration data
+            - `CameraPose.java`: Core position estimation using Aruco markers
+            - `PhysicalElement.java`: Representation of physical elements with position and ID
+    - `resources`: Configuration and data files
+        - `calibration`: Camera calibration files
+- `python`: Supporting Python scripts for calibration and testing
+    - `calibration.py`: Camera calibration script (Python equivalent of CameraCalibration.java)
+    - `get-frames.py`: Script for extracting calibration frames
+    - `calibration_matrix.yaml`: Calibration matrix data
+    - `frame-*.jpg`: Sample frames used for calibration
 
 ## How to run the demonstrator
 
