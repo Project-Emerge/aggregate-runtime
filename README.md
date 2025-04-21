@@ -28,7 +28,7 @@ The project is organized as follows:
             - `checker`: Utilities for camera operation verification and calibration testing.
         - `view.fx`: JavaFX visualization components used for simulation purposes.
     - `main/java`: Java implementation of OpenCV-based components
-        - `it/unibo/artificial_vision_tracking`: OpenCV abstractions for position estimation, including:
+        - `it/unibo/artificial_vision_tracking/aruco_markers`: OpenCV abstractions for position estimation, including:
             - `CameraCalibrator.java`: Camera calibration using predefined calibration data
             - `CameraPose.java`: Core position estimation using Aruco markers
             - `PhysicalElement.java`: Representation of physical elements with position and ID
