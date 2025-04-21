@@ -48,6 +48,11 @@ This section explains how to run the demonstrator in simulation mode.
 - sbt (Scala Build Tool) >= 1.10.1
 - Java >= 8
 
+#### Installation of required tools
+If you need help to install Java and SBT, please refer to the following resources:
+- [How do I install Java ?](https://www.java.com/en/download/help/download_options.html)
+- [Installing sbt](https://www.scala-sbt.org/1.x/docs/Setup.html)
+
 ### Launch the demonstrator
 The following commands simulate the scenarios demonstrated during the Researchers' Night:
 
