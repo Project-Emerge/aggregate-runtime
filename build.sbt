@@ -15,6 +15,7 @@ lazy val root = (project in file("."))
     libraryDependencies += "org.slf4j" % "slf4j-simple" % slf4jVersion,
     libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.5.7",
     libraryDependencies += "org.bytedeco" % "javacv-platform" % "1.5.10",
+    libraryDependencies += "org.eclipse.paho" % "org.eclipse.paho.client.mqttv3" % "1.2.5",
     libraryDependencies ++= {
       // Determine OS version of JavaFX binaries
       lazy val osName = System.getProperty("os.name") match {

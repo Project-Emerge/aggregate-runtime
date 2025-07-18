@@ -3,7 +3,7 @@ package it.unibo.demo
 import it.unibo.core.UpdateLoop
 import it.unibo.core.aggregate.AggregateIncarnation.{AggregateProgram, ID}
 import it.unibo.core.aggregate.AggregateOrchestrator
-import it.unibo.demo.camera.CameraProvider
+import it.unibo.demo.provider.CameraProvider
 import it.unibo.demo.robot.{Actuation, RobotUpdate, WaveRobot}
 import it.unibo.demo.scenarios.*
 import it.unibo.mock.{MagnifierPolicy, SimpleRender}
@@ -71,6 +71,6 @@ class BaseDemoProgramEntrypoint(program: BaseDemo) extends JFXApp3 {
     }.toMap
 }
 
-object LineDemoWithRobots extends BaseDemoProgramEntrypoint(LineFormation(0.4, 5, 0.05))
+object LineDemoWithRobots extends BaseDemoProgramEntrypoint(LineFormation(0.4, 5, 0.05, 2))
 
-object CircleDemoWithRobots extends BaseDemoProgramEntrypoint(CircleFormation(0.5, 5, 0.05))
+object CircleDemoWithRobots extends BaseDemoProgramEntrypoint(CircleFormation(0.5, 12, 0.05, 0.0))

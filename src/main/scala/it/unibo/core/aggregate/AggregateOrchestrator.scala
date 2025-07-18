@@ -28,7 +28,7 @@ class AggregateOrchestrator[Position, Info, Actuation](
     exports.map((agent, ex) => agent -> ex.root[Actuation]())
 
   private def contextFromAgent(agent: Int, world: Environment[Int, Position, Info]): CONTEXT =
-    val neighbours = world.neighbors(agent)
+    val neighbours = world.neighbors(agent) + agent
     val neighboursPosition = neighbours.map(n => n -> world.position(n)).toMap
     val myPosition = world.position(agent)
     val myInfo = world.sensing(agent)

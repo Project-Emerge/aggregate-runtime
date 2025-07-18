@@ -1,6 +1,7 @@
 package it.unibo.core.aggregate
 
 import it.unibo.scafi.incarnations.BasicAbstractIncarnation
+import it.unibo.scafi.lib.{StandardLibrary, StdLibExplicitFields}
 
 /**
  * Base ScaFi incarnation for this service.

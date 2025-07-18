@@ -1,9 +1,9 @@
 package it.unibo.mock
 
-import it.unibo.core.EnvironmentUpdate
+import it.unibo.core.{Environment, EnvironmentUpdate}
 import it.unibo.demo.robot.Actuation.*
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  * Update the environment of the simulation for the mock scenario.
@@ -29,3 +29,16 @@ class SimpleUpdate(killStrategy: KillStrategy = KillStrategy.never)
     world.directions = world.directions.updated(id, direction + (Math.PI / 2))
     if (!killStrategy.shouldSurvive(id)) world.positions = world.positions.removed(id)
     ()
+
+class NoUpdate(using ExecutionContext) extends EnvironmentUpdate[ID, Position, Actuation, Info, Environment[ID, Position, Info]] {
+  /**
+   * Update the environment with the given actuation.
+   * It returns a future that will complete when the update is done.
+   * It can fail if the actuation is not valid for the given node.
+   *
+   * @param node      The node to update
+   * @param actuation The actuation to apply
+   * @return A future that will complete when the update is done
+   */
+  override def update(world: Environment[ID, (Info, Info), Info], id: ID, actuation: Actuation): Future[Unit] = Future(())
+}

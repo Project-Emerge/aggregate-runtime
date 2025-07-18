@@ -3,6 +3,9 @@ package it.unibo.mock
 import it.unibo.core.UpdateLoop
 import it.unibo.core.aggregate.AggregateIncarnation.*
 import it.unibo.core.aggregate.AggregateOrchestrator
+import it.unibo.demo.provider.MqttProvider
+import it.unibo.demo.robot.Actuation.{Forward, Rotation}
+import it.unibo.demo.robot.RobotUpdateMqtt
 import it.unibo.demo.scenarios.{BaseDemo, CircleFormation, LineFormation, TowardLeader}
 import it.unibo.utils.Position.given
 import scalafx.application.JFXApp3
@@ -18,13 +21,14 @@ class BaseAggregateServiceExample(demoToLaunch: BaseDemo) extends JFXApp3:
   private val nodeGuiSize = 10
   override def start(): Unit =
 
-    val agents = randomAgents(10, 500)
+    val agents = randomAgents(42, 500)
     val world = SimpleEnvironment(agents, agentsNeighborhoodRadius)
-    val provider = SimpleProvider(world)
-    val update = SimpleUpdate(killStrategy = KillStrategy.killIdAfterNSteps(4000, Set(1, 2, 3, 4)))
+    val provider = MqttProvider("tcp://localhost:1883")
+    provider.start()
+    val update = RobotUpdateMqtt(0.6)
     val aggregateOrchestrator =
       AggregateOrchestrator[Position, Info, Actuation](
-        agents.keySet,
+        (0 to 12).toSet,
         demoToLaunch
       )
 
@@ -34,9 +38,9 @@ class BaseAggregateServiceExample(demoToLaunch: BaseDemo) extends JFXApp3:
     basePane.children.addAll(neighborhoodPane, guiPane)
     val worldPane = WorldPanel(guiPane, NodeStyle(nodeGuiSize, nodeGuiSize, Color.Blue))
     val neighbouringPane = NeighborhoodPanel(guiPane, neighborhoodPane)
-    val render = SimpleRender(worldPane, neighbouringPane)
+    val render = SimpleRender(worldPane, neighbouringPane, MagnifierPolicy.scale(10))
 
-    UpdateLoop.loop(33)(
+    UpdateLoop.loop(30)(
       provider,
       aggregateOrchestrator,
       update,
@@ -57,6 +61,6 @@ class BaseAggregateServiceExample(demoToLaunch: BaseDemo) extends JFXApp3:
     }.toMap
 
 
-object LineFormationDemo extends BaseAggregateServiceExample(LineFormation(40, 5, 5))
+object LineFormationDemo extends BaseAggregateServiceExample(LineFormation(5, 5, 1, 4.5))
 
-object CircleFormationDemo extends BaseAggregateServiceExample(CircleFormation(40, 5, 5))
+object CircleFormationDemo extends BaseAggregateServiceExample(CircleFormation(15, 5, 1, 2.5))

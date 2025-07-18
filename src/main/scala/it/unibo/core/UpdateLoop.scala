@@ -53,6 +53,6 @@ object UpdateLoop:
       render: Boundary[ID, Position, Info]
   )(using ExecutionContext): Future[Unit] =
     step(provider, coordinator, actuator, render)
-      .recover(e => println(s"Error in loop: $e"))
+      .recover(e => println(s"Error in loop: ${e.printStackTrace()}"))
       .flatMap(_ => Future(Thread.sleep(waitTime)))
       .flatMap(_ => loop(waitTime)(provider, coordinator, actuator, render))

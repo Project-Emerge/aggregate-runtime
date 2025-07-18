@@ -1,6 +1,6 @@
 package it.unibo.demo.scenarios
 
-import it.unibo.core.aggregate.AggregateIncarnation.{AggregateProgram, BlockG, BlockC, StandardSensors}
+import it.unibo.core.aggregate.AggregateIncarnation.{AggregateProgram, BlockC, BlockG, StandardSensors}
 
 /**
  * Base class for all the demo programs.

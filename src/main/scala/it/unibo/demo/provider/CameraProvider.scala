@@ -1,4 +1,4 @@
-package it.unibo.demo.camera
+package it.unibo.demo.provider
 
 import it.unibo.artificial_vision_tracking.aruco_markers.CameraPose
 import it.unibo.core.{Environment, EnvironmentProvider}

@@ -1,11 +1,15 @@
 package it.unibo.demo.scenarios
 
 import it.unibo.demo.robot.Actuation
-import it.unibo.demo.robot.Actuation.{Forward, NoOp, Rotation}
-
-abstract class ShapeFormation(leaderSelected: Int, stabilityThreshold: Double) extends BaseDemo:
+import it.unibo.demo.robot.Actuation.{Forward, Rotation}
+import it.unibo.scafi.space.Point3D
+import it.unibo.scafi.space.optimization.RichPoint3D
+abstract class ShapeFormation(leaderSelected: Int, stabilityThreshold: Double, collisionRange: Double) extends BaseDemo:
+  extension(p: Point3D)
+    def magnitude: Double = p.distance(Point3D.Zero)
+    def normalize: Point3D = Point3D(p.x / p.magnitude, p.y / p.magnitude, 0)
   def calculateSuggestion(ordered: List[(Int, (Double, Double))]): Map[Int, (Double, Double)]
-
+  val repulsionStrength = 50.0
   override def main(): Actuation =
     val leader = mid() == leaderSelected
     val potential = gradientCast(leader, 0.0, _ + nbrRange)
@@ -18,17 +22,28 @@ abstract class ShapeFormation(leaderSelected: Int, stabilityThreshold: Double) e
     val suggestion = branch(leaderSelected == mid())(calculateSuggestion(ordered))(Map.empty)
     val local = gradientCast(leader, suggestion, a => a).getOrElse(mid, (0.0, 0.0))
     val distanceTowardGoal = Math.sqrt(local._1 * local._1 + local._2 * local._2)
+    val neighborsInCollisionArea = foldhoodPlus[Map[Int, (Double, Double)]](Map.empty)((a, b) => a ++ b)(Map(nbr(mid) -> distanceVector))
+      .map { (id, nbrVector) => id -> Point3D(nbrVector._1, nbrVector._2, 0.0) }
+      .map { case (id, nbrVector) => id -> (nbrVector, nbrVector.distance(Point3D.Zero))}
+      .filter { case (id, (_, distance)) => distance < collisionRange }
+      .map { case (id, (vector, distance)) => id -> (vector.normalize * (repulsionStrength / (distance * distance)), distance) }
+      .toList
+      .sortBy(_._2._2)
+      .map(_._2._1)
+      //.view.mapValues(_._1).values
+    val obstacleAvoidanceVector = neighborsInCollisionArea.foldLeft(Point3D.Zero)(_ + _) * -1
+    println(obstacleAvoidanceVector)
+    val resultingVector = (Point3D(local._1, local._2, 0) * 0.5) + obstacleAvoidanceVector
     val res =
       if distanceTowardGoal < stabilityThreshold then Rotation(0, 1)
-      else Forward((local._1 / distanceTowardGoal, local._2 / distanceTowardGoal))
-    // println(s"Device ${mid()}: $res")
+      else Forward((resultingVector.x / distanceTowardGoal, resultingVector.y / distanceTowardGoal))
     res
 
   protected def orderedNodes(nodes: Set[(Int, (Double, Double))]): List[(Int, (Double, Double))] =
     nodes.filter(_._1 != mid()).toList.sortBy(_._1)
 
-class LineFormation(distanceThreshold: Double, leaderSelected: Int, stabilityThreshold: Double)
-    extends ShapeFormation(leaderSelected, stabilityThreshold):
+class LineFormation(distanceThreshold: Double, leaderSelected: Int, stabilityThreshold: Double, collisionArea: Double)
+    extends ShapeFormation(leaderSelected, stabilityThreshold, collisionArea: Double):
   override def calculateSuggestion(ordered: List[(Int, (Double, Double))]): Map[Int, (Double, Double)] =
     val (leftSlots, rightSlots) = ordered.indices.splitAt(ordered.size / 2)
     var devicesAvailable = ordered
@@ -59,8 +74,8 @@ class LineFormation(distanceThreshold: Double, leaderSelected: Int, stabilityThr
       .toMap
     leftCandidates ++ rightCandidates
 
-class CircleFormation(radius: Double, leaderSelected: Int, stabilityThreshold: Double)
-    extends ShapeFormation(leaderSelected, stabilityThreshold):
+class CircleFormation(radius: Double, leaderSelected: Int, stabilityThreshold: Double, collisionArea: Double)
+    extends ShapeFormation(leaderSelected, stabilityThreshold, collisionArea: Double):
   override def calculateSuggestion(ordered: List[(Int, (Double, Double))]): Map[Int, (Double, Double)] =
     val division = (math.Pi * 2) / ordered.size
     val precomputedAngels = ordered.indices.map(i => division * (i + 1))

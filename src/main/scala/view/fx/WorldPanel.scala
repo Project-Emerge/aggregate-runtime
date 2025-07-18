@@ -29,10 +29,13 @@ class WorldPanel(pane: Pane, style: NodeStyle):
    * @param y         the y-coordinate of the node
    * @param direction the direction of the node
    */
-  def drawNodeAt(id: String, x: Double, y: Double, direction: Double): Unit =
+  def drawNodeAt(id: String, x: Double, y: Double, direction: Double): Unit = {
     Platform.runLater:
+      if(id == "10") then
+        println((id, direction))
       if !isAlreadyIn(id) then addNode(id, x, y, direction)
       else updateNode(id, x, y, direction)
+  }
 
   /**
    * Adds a new node to the pane.
@@ -107,8 +110,8 @@ class WorldPanel(pane: Pane, style: NodeStyle):
    * @return          a tuple containing the delta x and y coordinates
    */
   private def calculateDelta(centerX: Double, centerY: Double, direction: Double): (Double, Double) =
-    val deltaX = centerX + (Math.cos(direction - (Math.PI / 2)) * 10)
-    val deltaY = centerY + (Math.sin(direction - (Math.PI / 2)) * 10)
+    val deltaX = centerX + (Math.cos(-direction) * 10)
+    val deltaY = centerY - (Math.sin(-direction) * 10)
     (deltaX, deltaY)
 
   /**
