@@ -1,7 +1,7 @@
-package it.unibo.mock
+package view.fx
 
-import it.unibo.core.{Environment, Boundary}
-import view.fx.{NeighborhoodPanel, WorldPanel}
+import it.unibo.core.{Boundary, Environment}
+import it.unibo.demo.{ID, Info}
 
 import scala.concurrent.{ExecutionContext, Future}
 

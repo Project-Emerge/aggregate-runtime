@@ -6,6 +6,11 @@ import it.unibo.demo.{ID, Info, Position}
 
 import scala.concurrent.{ExecutionContext, Future}
 
+enum Actuation:
+  case Rotation(rotationVector: (Double, Double))
+  case Forward(vector: (Double, Double))
+  case NoOp
+
 class RobotUpdateMqtt(threshold: Double)(using ExecutionContext)
     extends EnvironmentUpdate[ID, Position, Actuation, Info, Environment[ID, Position, Info]]:
 

@@ -1,17 +1,16 @@
-package it.unibo.mock
+package it.unibo.demo
 
 import it.unibo.core.UpdateLoop
 import it.unibo.core.aggregate.AggregateIncarnation.*
 import it.unibo.core.aggregate.AggregateOrchestrator
 import it.unibo.demo.provider.MqttProvider
-import it.unibo.demo.robot.Actuation.{Forward, Rotation}
 import it.unibo.demo.robot.RobotUpdateMqtt
-import it.unibo.demo.scenarios.{BaseDemo, CircleFormation, LineFormation, TowardLeader}
+import it.unibo.demo.scenarios.{BaseDemo, CircleFormation, LineFormation}
 import it.unibo.utils.Position.given
 import scalafx.application.JFXApp3
 import scalafx.scene.layout.Pane
 import scalafx.scene.paint.Color
-import view.fx.{NeighborhoodPanel, NodeStyle, WorldPanel}
+import view.fx.*
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Random
@@ -21,14 +20,13 @@ class BaseAggregateServiceExample(demoToLaunch: BaseDemo) extends JFXApp3:
   private val nodeGuiSize = 10
   override def start(): Unit =
 
-    val agents = randomAgents(42, 500)
-    val world = SimpleEnvironment(agents, agentsNeighborhoodRadius)
+    val agents = 12
     val provider = MqttProvider("tcp://localhost:1883")
     provider.start()
     val update = RobotUpdateMqtt(0.6)
     val aggregateOrchestrator =
       AggregateOrchestrator[Position, Info, Actuation](
-        (0 to 12).toSet,
+        (0 to agents).toSet,
         demoToLaunch
       )
 
@@ -38,7 +36,11 @@ class BaseAggregateServiceExample(demoToLaunch: BaseDemo) extends JFXApp3:
     basePane.children.addAll(neighborhoodPane, guiPane)
     val worldPane = WorldPanel(guiPane, NodeStyle(nodeGuiSize, nodeGuiSize, Color.Blue))
     val neighbouringPane = NeighborhoodPanel(guiPane, neighborhoodPane)
-    val render = SimpleRender(worldPane, neighbouringPane, MagnifierPolicy.scale(10))
+    val render = SimpleRender(
+      worldPane,
+      neighbouringPane,
+      MagnifierPolicy.translateAndScale((400, 400), 10)
+    )
 
     UpdateLoop.loop(30)(
       provider,
